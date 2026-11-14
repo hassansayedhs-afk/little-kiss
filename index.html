@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A Little Kiss 💋</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;
+ font-family:Georgia,"Times New Roman",serif;color:#4b1830;
+ background:linear-gradient(135deg,#fff0f5,#ffd1e2 48%,#f3a9c7);
+}
+.card{
+ width:min(92vw,570px);min-height:570px;padding:48px 28px;
+ text-align:center;position:relative;overflow:hidden;border-radius:34px;
+ background:rgba(255,255,255,.72);backdrop-filter:blur(16px);
+ border:1px solid rgba(255,255,255,.8);
+ box-shadow:0 28px 80px rgba(100,20,55,.22);
+}
+.kiss{font-size:76px;filter:drop-shadow(0 8px 12px rgba(150,30,80,.18));animation:pulse 2s infinite}
+h1{font-size:clamp(32px,8vw,52px);margin:12px 0 8px}
+.subtitle{font-family:Arial,sans-serif;color:#7c4a61;font-size:16px;line-height:1.6}
+.question{font-size:25px;margin:32px 0 24px}
+.buttons{height:150px;position:relative}
+button{
+ border:0;border-radius:999px;padding:15px 30px;font-size:17px;font-weight:bold;
+ cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:Arial,sans-serif
+}
+#yes{background:#8e214f;color:#fff;box-shadow:0 10px 24px rgba(142,33,79,.3);position:absolute;left:50%;transform:translateX(-115%)}
+#yes:hover{transform:translateX(-115%) scale(1.07)}
+#no{background:#fff;color:#8e214f;border:1px solid #e6a8bf;position:absolute;left:50%;transform:translateX(15%)}
+.note{font-size:13px;color:#8c6475;margin-top:16px;font-family:Arial,sans-serif}
+.success{display:none;animation:appear .8s ease}
+.success .big{font-size:92px;animation:pulse 1.5s infinite}
+.success h2{font-size:38px;margin:15px 0 10px}
+.success p{font-family:Arial,sans-serif;line-height:1.7;color:#70465a}
+.replay{margin-top:20px;background:#8e214f;color:#fff}
+.heart{position:fixed;pointer-events:none;animation:rise 4s linear forwards;font-size:24px}
+@keyframes pulse{50%{transform:scale(1.08)}}
+@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes rise{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+@media(max-width:500px){.card{min-height:540px;padding:38px 18px}.buttons{height:170px}}
+</style>
+</head>
+<body>
+<main class="card">
+  <section id="questionScreen">
+    <div class="kiss">💋</div>
+    <h1>One Little Kiss</h1>
+    <p class="subtitle">Distance may keep me away today…<br>but I still have a little something for you.</p>
+    <div class="question">Will you accept your kiss? ❤️</div>
+    <div class="buttons" id="arena">
+      <button id="yes">YES 💋</button>
+      <button id="no">NO 🙈</button>
+    </div>
+    <div class="note">P.S. … the NO button is a little shy 😏</div>
+  </section>
+
+  <section class="success" id="successScreen">
+    <div class="big">💋</div>
+    <h2>Kiss Delivered!</h2>
+    <p>
+      Just for you ❤️<br>
+      I may be far away, but this kiss travelled all the way to you.<br>
+      Keep it safe… it's exclusively yours. ✨
+    </p>
+    <button class="replay" onclick="location.reload()">One more kiss 💋</button>
+  </section>
+</main>
+
+<script>
+const no=document.getElementById('no');
+const yes=document.getElementById('yes');
+const arena=document.getElementById('arena');
+
+function moveNo(){
+  const pad=5;
+  const maxX=arena.clientWidth-no.offsetWidth-pad;
+  const maxY=arena.clientHeight-no.offsetHeight-pad;
+  no.style.left=Math.max(pad,Math.random()*maxX)+'px';
+  no.style.top=Math.max(pad,Math.random()*maxY)+'px';
+  no.style.transform='none';
+}
+['mouseenter','touchstart','pointerdown'].forEach(e=>no.addEventListener(e,(ev)=>{
+  ev.preventDefault(); moveNo();
+}));
+
+yes.addEventListener('click',()=>{
+  document.getElementById('questionScreen').style.display='none';
+  document.getElementById('successScreen').style.display='block';
+  for(let i=0;i<28;i++){
+    setTimeout(()=>{
+      const h=document.createElement('div');
+      h.className='heart';
+      h.textContent=['💗','💖','💕','💋','✨'][Math.floor(Math.random()*5)];
+      h.style.left=Math.random()*100+'vw';
+      h.style.bottom='-30px';
+      h.style.animationDuration=(3+Math.random()*3)+'s';
+      document.body.appendChild(h);
+      setTimeout(()=>h.remove(),6500);
+    },i*90);
+  }
+});
+</script>
+</body>
+</html>
